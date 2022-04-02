@@ -144,30 +144,20 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
-      const email = form.email.value;
-      const firstName = form.firstname.value;
-      const lastName = form.lastname.value;
-      const password = form.password.value;
-      const retypepassword = form.retypepassword.value;
-      const age = form.age.value;
-      const gender = form.gender.value;
-      const role = form.role.value;
-      const country = form.country.value;
-      if (retypepassword !== password) {
+      if (form.retypepassword.value !== form.password.value) {
         alert("Passwords do not match");
         return;
       }
 
       const body = {
-        email,
-        password,
-        firstName,
-        lastName,
-        age,
-        gender,
-        role,
-        country,
+        email: form.email.value,
+        firstName: form.firstname.value,
+        lastName: form.lastname.value,
+        password: form.password.value,
+        age: form.age.value,
+        gender: form.gender.value,
+        role: form.role.value,
+        country: form.country.value,
       };
 
       const { status, data } = await apiRequest("POST", "/signup", body);
