@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>Profile</title>
+  </head>
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+  <body>
+    <form class="form registerForm">
+      <h3>Personal Information</h3>
+      <div class="pic">
+        <img
+          src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=612x612&w=0&h=lGpj2vWAI3WUT1JeJWm1PRoHT3V15_1pdcTn2szdwQ0="
+          alt="Profile photo"
+        />
+      </div>
+      <br />
+      <div style="display: flex; justify-content: space-between">
+        <div class="icondiv fullname" style="width: 48%">
+          <span
+            class="iconify"
+            data-icon="bi:person-fill"
+            data-inline="false"
+          ></span>
+          <input
+            class="name"
+            type="text"
+            placeholder="First Name"
+            name="firstname"
+            readonly
+          /><br />
+        </div>
+        <br />
+        <div class="icondiv fullname" style="width: 48%">
+          <span
+            class="iconify"
+            data-icon="bi:person-fill"
+            data-inline="false"
+          ></span>
+          <input
+            class="name"
+            type="text"
+            placeholder="Last Name"
+            name="lastname"
+            readonly
+          /><br />
+        </div>
+      </div>
+      <br />
+      <div class="icondiv">
+        <span class="iconify" data-icon="ic:baseline-email"></span>
+        <input
+          class="name"
+          type="text"
+          placeholder="Email"
+          name="email"
+          readonly
+        /><br />
+      </div>
+      <br />
+      <div class="icondiv">
+        <span class="iconify" data-icon="ic:baseline-date-range"></span>
+        <input
+          class="name"
+          type="number"
+          placeholder="Age"
+          min="1"
+          name="age"
+          readonly
+        /><br />
+      </div>
+      <br />
+      <div class="icondiv">
+        <span class="iconify" data-icon="fa-solid:globe"></span>
+        <input
+          class="name"
+          type="text"
+          placeholder="Country"
+          name="country"
+          id="country"
+          readonly
+        /><br />
+      </div>
+      <br />
+    </form>
+    <form class="form registerForm">
+      <h3>Change Password</h3>
+      <div class="icondiv">
+        <span
+          class="iconify"
+          data-icon="bx:bxs-lock-alt"
+          data-inline="false"
+        ></span>
+        <input
+          class="name"
+          type="password"
+          name="password"
+          placeholder="Old password"
+        /><br />
+      </div>
+      <br />
+      <div class="icondiv">
+        <span
+          class="iconify"
+          data-icon="bx:bxs-lock-alt"
+          data-inline="false"
+        ></span>
+        <input
+          class="name"
+          type="password"
+          name="retypepassword"
+          id=""
+          placeholder="New password"
+        /><br />
+      </div>
+      <br />
+      <button type="submit">Change</button>
+      <button type="button" id="logout-btn">Log out</button>
+    </form>
+  </body>
+  <script src="../js/main.js"></script>
+  <script>
+    window.onload = async (e) => {
+      const queryParams = new Proxy(
+        new URLSearchParams(window.location.search),
+        {
+          get: (searchParams, prop) => searchParams.get(prop),
+        }
+      );
+      const email = queryParams.email;
+      const { status, data } = await apiRequest(
+        "GET",
+        `/profile?id=${email}`,
+        null
+      );
+      if (status !== 200) {
+        location.replace("./login.html");
+      } else {
+        const form = document.querySelector(".registerForm");
+        form.firstname.value = data?.payload?.firstName || "";
+        form.lastname.value = data?.payload?.lastName || "";
+        form.email.value = data?.payload?.email;
+        form.age.value = data?.payload?.age || "";
+        form.country.value = data?.payload?.country || "";
+      }
+    };
+    document.getElementById("logout-btn").onclick = (e) => {
+      location.replace("./login.html");
+    };
+  </script>
+</html>

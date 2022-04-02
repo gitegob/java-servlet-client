@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css//styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <title>Signup</title>
   </head>
   <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
@@ -13,7 +13,7 @@
     <form class="form registerForm">
       <h3>Responsive Registration Form</h3>
       <div class="icondiv">
-        <span class="iconify" data-icon="bi:person-fill"></span>
+        <span class="iconify" data-icon="ic:baseline-email"></span>
         <input
           class="name"
           type="text"
@@ -93,22 +93,25 @@
         /><br />
       </div>
       <br />
-      <div>
-        <input type="radio" name="gender" value="male" id="" />
+      <div class="fsize_9">
+        <input type="radio" name="gender" value="MALE" id="" />
         <label for="">Male</label>
-        <input type="radio" name="gender" value="female" id="" />
+        <input type="radio" name="gender" value="FEMALE" id="" />
         <label for="">Female</label>
       </div>
-      <div>
+      <div class="fsize_9">
         <p>Select your role</p>
-        <input type="radio" name="role" value="Admin" id="" />
-        <label for="">Admin</label><br />
-        <input type="radio" name="role" value="Guest" id="" />
-        <label for="">Guest</label>
+        <input type="radio" name="admin" value="ADMIN" id="" />
+        <label for="admin">Admin</label>
+        <input type="radio" name="guest" value="GUEST" id="" />
+        <label for="guest">Guest</label>
       </div>
-      <div>
-        <select name="cars" id="country-selector">
-          <option value="select">Select a country</option>
+      <br />
+      <div class="country-selector-div">
+        <select name="country" id="country-selector">
+          <option selected disabled id="select-country-option">
+            Select a country
+          </option>
           <option value="Rwanda">Rwanda</option>
           <option value="Burundi">Burundi</option>
           <option value="Tanzania">Tanzania</option>
@@ -117,73 +120,62 @@
           <option value="South Sudan">South Sudan</option>
         </select>
       </div>
+      <br />
       <div>
         <input type="checkbox" name="" id="terms-conditions" />
         <label for="terms-conditions"
           >I agree with the terms and conditions</label
         ><br />
+        <br />
         <input type="checkbox" name="" id="newsletter" />
         <label for="newsletter">I want to receive the newsletter</label><br />
       </div>
+      <br />
       <button type="submit">Register</button>
       <p>
-        Already have an account
-        <span><a href="/Challenge5/login.html">Log in</a></span>
+        Already have an account?
+        <span><a href="./login.html">Log in</a></span>
       </p>
     </form>
   </body>
-  <script src="/main.js"></script>
+  <script src="../js/main.js"></script>
   <script>
     const form = document.querySelector(".registerForm");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const username = form.username.value;
-      const firstname = form.firstname.value;
-      const lastname = form.lastname.value;
       const email = form.email.value;
+      const firstName = form.firstname.value;
+      const lastName = form.lastname.value;
       const password = form.password.value;
+      const retypepassword = form.retypepassword.value;
       const age = form.age.value;
-      const phone = form.phone.value;
       const gender = form.gender.value;
       const role = form.role.value;
+      const country = form.country.value;
+      if (retypepassword !== password) {
+        alert("Passwords do not match");
+        return;
+      }
 
-      const data = {
-        username,
-        password,
-        firstname,
-        lastname,
+      const body = {
         email,
+        password,
+        firstName,
+        lastName,
         age,
-        phone,
         gender,
         role,
+        country,
       };
 
-      var formBody = [];
-      for (var property in data) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(data[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
+      const { status, data } = await apiRequest("POST", "/signup", body);
 
-      console.log(formBody);
-
-      const res = await fetch("http://localhost:8080/Challenge5/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body: formBody,
-      });
-      const user = await res.json();
-
-      if (user.code == 201) {
-        location.href = "/Challenge5/login.html";
+      if (status === 201) {
+        location.href = "./login.html";
       } else {
-        alert(user.msg);
+        alert(data?.message);
       }
     });
   </script>
