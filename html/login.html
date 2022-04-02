@@ -51,13 +51,9 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
-      const email = form.email.value;
-      const password = form.password.value;
-
       const body = {
-        email,
-        password,
+        email: form.email.value,
+        password: form.password.value,
       };
 
       const { status, data } = await apiRequest("POST", "/login", body);
