@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>Login</title>
+  </head>
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+  <body>
+    <form class="form registerForm">
+      <h3>Login</h3>
+      <div class="icondiv">
+        <span class="iconify" data-icon="ic:baseline-email"></span>
+        <input
+          class="name"
+          type="text"
+          placeholder="Email"
+          name="email"
+        /><br />
+      </div>
+      <br />
+      <div class="icondiv">
+        <span
+          class="iconify"
+          data-icon="bx:bxs-lock-alt"
+          data-inline="false"
+        ></span>
+        <input
+          class="name"
+          type="password"
+          name="password"
+          id=""
+          placeholder="Password"
+        /><br />
+      </div>
+      <br />
+
+      <button type="submit">Login</button>
+      <p>
+        Don't have an account yet?
+        <span><a href="./index.html">Signup</a></span>
+      </p>
+    </form>
+  </body>
+  <script src="../js/main.js"></script>
+  <script>
+    const form = document.querySelector(".registerForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = form.email.value;
+      const password = form.password.value;
+
+      const body = {
+        email,
+        password,
+      };
+
+      const { status, data } = await apiRequest("POST", "/login", body);
+
+      if (status === 200) {
+        location.href = `./profile.html?email=${data.payload}`;
+      } else {
+        alert(data?.message);
+      }
+    });
+  </script>
+</html>

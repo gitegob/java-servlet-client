@@ -1,19 +1,17 @@
-const apiUrl = "http://localhost:8080";
+const apiUrl = "http://localhost:8080/api/v1";
 
-const RequestMethod = {
-  GET: "GET",
-  GET: "POST",
-};
-
-const fetch = async (method, endpoint, body) => {
-  return await (
-    await fetch({
-      method,
-      url: `${apiUrl}${endpoint}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body,
-    })
-  ).json();
+const apiRequest = async (method, endpoint, body) => {
+  console.log(body);
+  const response = await fetch(`${apiUrl}${endpoint}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: body ? JSON.stringify(body) : null,
+  });
+  const data = await response.json();
+  return {
+    status: response.status,
+    data,
+  };
 };
