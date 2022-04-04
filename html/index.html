@@ -10,8 +10,38 @@
   <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
   <body>
-    <form class="form registerForm">
+    <form class="form registerForm auth">
       <h3>Responsive Registration Form</h3>
+      <div style="display: flex; justify-content: space-between">
+        <div class="icondiv fullname" style="width: 48%">
+          <span
+            class="iconify"
+            data-icon="bi:person-fill"
+            data-inline="false"
+          ></span>
+          <input
+            class="name"
+            type="text"
+            placeholder="First Name"
+            name="firstname"
+          /><br />
+        </div>
+        <br />
+        <div class="icondiv fullname" style="width: 48%">
+          <span
+            class="iconify"
+            data-icon="bi:person-fill"
+            data-inline="false"
+          ></span>
+          <input
+            class="name"
+            type="text"
+            placeholder="Last Name"
+            name="lastname"
+          /><br />
+        </div>
+      </div>
+      <br />
       <div class="icondiv">
         <span class="iconify" data-icon="ic:baseline-email"></span>
         <input
@@ -52,36 +82,6 @@
         /><br />
       </div>
       <br />
-      <div style="display: flex; justify-content: space-between">
-        <div class="icondiv fullname" style="width: 48%">
-          <span
-            class="iconify"
-            data-icon="bi:person-fill"
-            data-inline="false"
-          ></span>
-          <input
-            class="name"
-            type="text"
-            placeholder="First Name"
-            name="firstname"
-          /><br />
-        </div>
-        <br />
-        <div class="icondiv fullname" style="width: 48%">
-          <span
-            class="iconify"
-            data-icon="bi:person-fill"
-            data-inline="false"
-          ></span>
-          <input
-            class="name"
-            type="text"
-            placeholder="Last Name"
-            name="lastname"
-          /><br />
-        </div>
-      </div>
-      <br />
       <div class="icondiv">
         <span class="iconify" data-icon="bi:person-fill"></span>
         <input
@@ -90,6 +90,17 @@
           placeholder="Age"
           min="1"
           name="age"
+        /><br />
+      </div>
+      <br />
+      <div class="icondiv">
+        <span class="iconify" data-icon="ic:baseline-phone"></span>
+        <input
+          class="name"
+          type="number"
+          placeholder="Phone number (07...)"
+          min="1"
+          name="phone"
         /><br />
       </div>
       <br />
@@ -158,6 +169,7 @@
         gender: form.gender.value,
         role: form.role.value,
         country: form.country.value,
+        phone: form.phone.value,
       };
 
       const { status, data } = await apiRequest("POST", "/signup", body);

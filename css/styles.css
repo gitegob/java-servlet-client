@@ -57,7 +57,7 @@ body {
   position: relative;
   color: #444;
 }
-.icondiv::before {
+.auth .icondiv::before {
   content: "";
   height: 0.5px;
   width: 30px;
@@ -72,14 +72,6 @@ body {
 
 .iconify {
   width: 20px;
-}
-
-.container {
-  width: 30%;
-  min-width: 400px;
-  margin: auto;
-  background-color: gray;
-  padding: 1rem;
 }
 
 img {
